@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>중소기업 인재키움 프리미엄 훈련</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        /* CSS Variables - Color System & Typography */
+        :root {
+            --primary-blue: #0078FF;
+            --deep-blue-1: #004386;
+            --deep-blue-2: #004778;
+            --deep-blue-3: #0067AC;
+            --accent-blue: #2E6CFF;
+            --bg-white: #FFFFFF;
+            --bg-light-1: #F2F7FE; 
+            --bg-light-2: #ECF4FF; 
+            --bg-dark: #0A1424;
+            --border-color: #DCE8FA;
+            --text-main: #141420;
+            --text-sub: #393C46;
+            --text-caption: #718099;
+        }
+
+        /* Global Reset & Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Pretendard', sans-serif;
+            color: var(--text-main);
+            line-height: 1.5;
+            letter-spacing: -0.02em;
+            word-break: keep-all;
+            background-color: var(--bg-white);
+            overflow-x: hidden;
+        }
+        
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 100px 0; }
+        
+        /* Typography Scale (PC Default) */
+        h1 { font-size: 40px; font-weight: 700; line-height: 1.35; margin-bottom: 20px; }
+        h2 { font-size: 32px; font-weight: 700; line-height: 1.4; margin-bottom: 16px; }
+        h3 { font-size: 24px; font-weight: 700; line-height: 1.4; margin-bottom: 12px; }
+        .sub-title { font-size: 20px; font-weight: 500; color: var(--text-sub); margin-bottom: 40px; line-height: 1.6; }
+        .caption { font-size: 14px; font-weight: 400; color: var(--text-caption); }
+        .badge { 
+            font-size: 14px; font-weight: 700; color: var(--accent-blue); 
+            background: var(--bg-light-2); padding: 6px 14px;
+            border-radius: 20px; margin-bottom: 16px; display: inline-block; 
+        }
+
+        /* 모바일 전용 타이포그래피 */
+        @media (max-width: 767px) {
+            section { padding: 60px 0; }
+            h1 { font-size: 32px; margin-bottom: 16px; }
+            .sec-hero .sub-title { font-size: 18px; margin-bottom: 32px; }
+            h2 { font-size: 24px; margin-bottom: 12px; }
+            .sub-title { font-size: 16px; margin-bottom: 32px; }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            height: 52px; padding: 0 32px; background-color: var(--primary-blue);
+            color: var(--bg-white); font-size: 16px; font-weight: 700;
+            border-radius: 8px; text-decoration: none; cursor: pointer;
+            transition: all 0.2s ease-in-out; border: 1px solid var(--primary-blue);
+        }
+        .btn:hover { background-color: var(--deep-blue-1); border-color: var(--deep-blue-1); transform: translateY(-2px); }
+        .btn-outline { background-color: var(--bg-white); color: var(--primary-blue); }
+        .btn-outline:hover { background-color: var(--bg-light-1); border-color: var(--primary-blue); color: var(--primary-blue); }
+
+        /* Section 1: Hero */
+        .sec-hero { 
+            background: linear-gradient(135deg, #001F45 0%, #004386 40%, var(--primary-blue) 100%); 
+            color: var(--bg-white); padding: 100px 0 80px; overflow: hidden; position: relative;
+        }
+        @media (min-width: 768px) { .sec-hero { padding: 120px 0 100px; } }
+        .sec-hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 50%); pointer-events: none;
+        }
+        .sec-hero .badge { background: rgba(255,255,255,0.15); color: #FFF; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .sec-hero .sub-title { color: #DCE8FA; }
+        .sec-hero .btn { background-color: var(--bg-white); color: var(--primary-blue); border-color: var(--bg-white); }
+        .sec-hero .btn:hover { background-color: var(--bg-light-1); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        
+        .hero-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 40px; position: relative; z-index: 2; }
+        .hero-content { display: flex; flex-direction: column; align-items: center; flex: 1; width: 100%; }
+        .hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; width: 100%; }
+        
+        @media (min-width: 768px) { 
+            .hero-inner { flex-direction: row; text-align: left; justify-content: space-between; gap: 64px; }
+            .hero-content { align-items: flex-start; min-width: 50%; }
+        }
+        
+        .ai-graphic-container { position: relative; width: 440px; height: 440px; display: flex; align-items: center; justify-content: center; transform: scale(0.65); margin: -70px 0; }
+        @media (min-width: 768px) { .ai-graphic-container { transform: scale(1); margin: 0; } }
+        
+        .orbit { position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .orbit-1 { width: 240px; height: 240px; border-style: dashed; animation: spin 25s linear infinite; }
+        .orbit-2 { width: 380px; height: 380px; animation: spin 40s linear infinite reverse; }
+        
+        .ai-core {
+            width: 130px; height: 130px; border-radius: 50%; background: linear-gradient(135deg, #FFFFFF 0%, #E6F0FC 100%);
+            color: var(--primary-blue); font-size: 32px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 50px rgba(255,255,255,0.3), inset 0 0 20px rgba(0,120,255,0.15); z-index: 10; position: relative; letter-spacing: 0.05em;
+        }
+        .ai-core::before { content: ''; position: absolute; inset: -16px; border-radius: 50%; border: 2px dashed rgba(255,255,255,0.4); animation: spin 15s linear infinite; }
+        
+        .ai-tool {
+            position: absolute; padding: 16px 32px; border-radius: 40px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: white; font-weight: 800; font-size: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); animation: float 6s ease-in-out infinite; display: flex; align-items: center; justify-content: center; z-index: 20;
+        }
+        
+        .ai-tool.chatgpt { top: 8%; left: 4%; animation-delay: 0s; }
+        .ai-tool.claude { top: 25%; right: -8%; animation-delay: -1.5s; }
+        .ai-tool.gemini { bottom: 10%; right: 5%; animation-delay: -3s; }
+        .ai-tool.copilot { bottom: 25%; left: -6%; animation-delay: -4.5s; }
+
+        @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+
+        /* Section 2: Info */
+        .sec-info { background-color: var(--bg-white); text-align: center; }
+        .sec-info .sub-title { text-align: center; }
+        .info-card { background: var(--bg-white); border: 1px solid var(--border-color); border-radius: 16px; padding: 48px; margin: 0 auto 40px; max-width: 800px; text-align: left; box-shadow: 0 10px 30px rgba(0, 120, 255, 0.03); }
+        .info-list { list-style: none; margin-bottom: 32px; }
+        .info-list li { font-size: 18px; font-weight: 700; margin-bottom: 20px; padding-left: 28px; position: relative; color: var(--text-main); }
+        .info-list li::before { content: '✓'; color: var(--primary-blue); position: absolute; left: 0; font-size: 20px; }
+        .info-list li span { font-size: 15px; font-weight: 400; color: var(--text-caption); display: block; margin-top: 8px; line-height: 1.4; }
+
+        @media (max-width: 767px) {
+            .info-card { padding: 32px 24px; margin-bottom: 32px; }
+            .info-list li { font-size: 16px; }
+            .sec-info .btn { width: 100%; }
+        }
+
+        /* Section 3: Graph */
+        .sec-graph { background-color: var(--bg-light-1); text-align: center; }
+        .graph-wrapper { background: var(--bg-white); max-width: 900px; margin: 64px auto 0; padding: 48px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.03); text-align: left; }
+        .graph-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
+        .graph-head-left p { font-size: 16px; font-weight: 500; color: var(--text-caption); margin-bottom: 8px; }
+        .graph-head-left strong { font-size: 52px; font-weight: 800; color: var(--primary-blue); line-height: 1; }
+        .graph-head-right { font-size: 14px; font-weight: 500; color: var(--text-caption); padding-bottom: 6px; }
+        
+        @media (max-width: 767px) {
+            .graph-wrapper { padding: 32px 20px; margin: 32px auto 0; }
+            .graph-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .graph-head-left strong { font-size: 40px; }
+        }
+
+        .graph-chart { position: relative; height: 320px; width: 100%; margin-top: 60px; }
+        .graph-grid { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-between; z-index: 1; }
+        .graph-grid-line { border-top: 1px dashed #E2E8F0; width: 100%; height: 0; }
+        .graph-cols { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; z-index: 2; }
+        .graph-col { flex: 1; position: relative; }
+        .graph-bar { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; background-color: #DEEAF6; border-radius: 6px 6px 0 0; z-index: 2; transition: all 0.5s ease; }
+        @media (min-width: 768px) { .graph-bar { width: 70px; } }
+        .graph-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; overflow: visible; }
+        .graph-dot { position: absolute; left: 50%; transform: translate(-50%, 50%); width: 14px; height: 14px; background-color: var(--primary-blue); border-radius: 50%; z-index: 4; box-shadow: 0 0 0 2px var(--bg-white); }
+        .graph-value { position: absolute; left: 50%; transform: translate(-50%, 0); margin-bottom: 24px; font-size: 13px; font-weight: 800; color: var(--text-main); z-index: 5; white-space: nowrap; }
+        .graph-labels { display: flex; width: 100%; margin-top: 16px; }
+        .graph-label { flex: 1; text-align: center; font-size: 13px; font-weight: 700; color: var(--text-sub); }
+        @media (min-width: 768px) { 
+            .graph-value { font-size: 16px; }
+            .graph-label { font-size: 15px; }
+        }
+
+        /* Section 4: Compare */
+        .sec-compare { background-color: var(--bg-white); }
+        .sec-compare .title-wrap { text-align: center; }
+        .compare-wrap { position: relative; display: flex; flex-direction: column; align-items: center; max-width: 900px; margin: 64px auto 0; gap: 24px; }
+        .comp-card { width: 100%; border-radius: 24px; padding: 48px; position: relative; transition: all 0.3s ease; }
+        .comp-header { font-size: 14px; font-weight: 800; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .comp-title { font-size: 26px; font-weight: 800; padding-bottom: 24px; margin-bottom: 32px; border-bottom: 1px solid; line-height: 1.3; }
+        .comp-list { list-style: none; }
+        .comp-item { margin-bottom: 24px; position: relative; padding-left: 32px; }
+        .comp-item:last-child { margin-bottom: 0; }
+        .comp-item::before { content: '✓'; position: absolute; left: 0; top: 0; font-size: 18px; font-weight: 900; }
+        .comp-item h4 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+        .comp-item p { font-size: 15px; line-height: 1.5; }
+        
+        @media (max-width: 767px) {
+            .compare-wrap { margin-top: 32px; }
+            .comp-card { padding: 32px 24px; }
+            .comp-title { font-size: 22px; padding-bottom: 16px; margin-bottom: 24px; }
+        }
+
+        .comp-before { background: var(--bg-white); border: 1px solid var(--border-color); z-index: 1; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        .comp-before .comp-header { color: var(--text-caption); }
+        .comp-before .comp-title { color: var(--text-main); border-color: var(--border-color); }
+        .comp-before .comp-item::before { color: #A0B0C4; }
+        .comp-before h4 { color: var(--text-main); }
+        .comp-before p { color: var(--text-caption); }
+        .comp-before .comp-caption { margin-top: 40px; font-size: 14px; color: var(--text-caption); }
+        
+        .comp-after { background: var(--primary-blue); color: var(--bg-white); z-index: 2; box-shadow: -20px 20px 60px rgba(0, 120, 255, 0.25); }
+        .comp-after .comp-header { color: #82A9FF; }
+        .comp-after .comp-title { color: var(--bg-white); border-color: rgba(255,255,255,0.2); }
+        .comp-after .comp-item::before { color: var(--modal-highlight); } 
+        .comp-after h4 { color: var(--bg-white); }
+        .comp-after p { color: #DCE8FA; }
+        .comp-after .comp-caption { margin-top: 40px; font-size: 14px; color: #A0B0C4; }
+        
+        .comp-arrow { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%) rotate(90deg); width: 48px; height: 48px; background: var(--accent-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 3; }
+
+        @media (min-width: 768px) {
+            .compare-wrap { flex-direction: row; align-items: center; gap: 0; margin-top: 80px; }
+            .comp-before { flex: 1; max-width: 460px; padding: 48px 80px 48px 48px; margin-right: -40px; transform: scale(0.95); opacity: 0.85; }
+            .comp-after { flex: 1.1; max-width: 500px; padding: 64px 48px; }
+            .comp-arrow { top: 50%; left: 0; transform: translate(-50%, -50%) rotate(0deg); }
+        }
+
+        /* Section 5: Curriculum Tabs */
+        .sec-curriculum { background-color: var(--bg-light-1); text-align: center; }
+        .tabs-container { margin-top: 56px; text-align: left; }
+        @media (max-width: 767px) { .tabs-container { margin-top: 32px; } }
+        .tabs-inputs { display: none; }
+        
+        .tabs-labels { display: flex; align-items: center; gap: 8px; margin-bottom: 32px; overflow-x: auto; padding-bottom: 12px; }
+        .tabs-labels::-webkit-scrollbar { display: none; }
+        .tabs-labels { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .tab-label { flex: 0 0 auto; min-width: 130px; text-align: center; padding: 16px; background: var(--bg-white); color: var(--text-sub); border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 16px; transition: all 0.2s; }
+        .tab-label small { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-caption); }
+        @media (min-width: 768px) {
+            .tabs-labels { gap: 12px; margin-bottom: 40px; justify-content: center; }
+            .tab-label { flex: 1; min-width: 140px; padding: 20px; font-size: 18px; }
+            .tab-label small { font-size: 13px; margin-bottom: 8px; }
+        }
+        
+        .tab-arrow { display: flex; align-items: center; justify-content: center; color: #A0B0C4; flex-shrink: 0; margin: 0 4px; }
+        @media (max-width: 767px) { .tab-arrow { display: none; } }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; max-width: 800px; margin: 0 auto; }
+        #tab1:checked ~ .tabs-labels label[for="tab1"], #tab2:checked ~ .tabs-labels label[for="tab2"], #tab3:checked ~ .tabs-labels label[for="tab3"], #tab4:checked ~ .tabs-labels label[for="tab4"] { background: var(--primary-blue); color: var(--bg-white); border-color: var(--primary-blue); box-shadow: 0 10px 20px rgba(0, 120, 255, 0.2); }
+        #tab1:checked ~ .tabs-labels label[for="tab1"] small, #tab2:checked ~ .tabs-labels label[for="tab2"] small, #tab3:checked ~ .tabs-labels label[for="tab3"] small, #tab4:checked ~ .tabs-labels label[for="tab4"] small { color: #82A9FF; }
+        #tab1:checked ~ #content1, #tab2:checked ~ #content2, #tab3:checked ~ #content3, #tab4:checked ~ #content4 { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .course-card { 
+            background: var(--bg-white); border: 1px solid var(--border-color); border-radius: 16px; 
+            padding: 32px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); 
+            transition: transform 0.2s; display: flex; gap: 24px; align-items: flex-start;
+        }
+        .course-card:hover { transform: translateY(-2px); border-color: var(--primary-blue); }
+        
+        .course-icon {
+            flex-shrink: 0; width: 80px; height: 80px; border-radius: 20px;
+            background: var(--bg-light-1); display: flex; align-items: center; justify-content: center;
+        }
+        .course-icon svg { width: 48px; height: 48px; }
+        
+        .course-info { flex: 1; }
+        .course-info h4 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--deep-blue-1); }
+        .course-info p { font-size: 16px; color: var(--text-sub); background: var(--bg-light-2); padding: 16px 20px; border-radius: 8px; line-height: 1.6; }
+
+        @media (max-width: 767px) {
+            .course-card { flex-direction: column; gap: 16px; padding: 24px; }
+            .course-icon { width: 64px; height: 64px; border-radius: 16px; }
+            .course-icon svg { width: 36px; height: 36px; }
+            .course-info h4 { font-size: 18px; }
+            .course-info p { font-size: 14px; padding: 16px; }
+        }
+
+        /* ★ Section 5.5: 현장 교육 갤러리 ★ */
+        .sec-gallery {
+            background-color: #F1F5F9; 
+            padding: 80px 0;
+            overflow: hidden; 
+        }
+        .sec-gallery .title-wrap {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+        
+        /* 갤러리 기본 (PC) 셋팅 */
+        .rolling-wrapper {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+        }
+        .rolling-track {
+            display: flex;
+            flex-shrink: 0;
+            animation: rolling 20s linear infinite;
+        }
+        .rolling-wrapper:hover .rolling-track {
+            animation-play-state: paused;
+        }
+        .rolling-item {
+            flex-shrink: 0;
+            width: 450px; 
+            aspect-ratio: 3 / 2;
+            margin-right: 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            background-color: #E2E8F0;
+        }
+        
+        /* Picture 태그 내부 img 공통 스타일 */
+        .rolling-item picture { display: block; width: 100%; height: 100%; }
+        .rolling-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        @keyframes rolling {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); } 
+        }
+
+        @media (min-width: 768px) {
+            .sec-gallery { padding: 100px 0; }
+            .sec-gallery .title-wrap { margin-bottom: 64px; }
+        }
+
+        /* ★ 모바일 갤러리 렌더링 세팅 ★ */
+        @media (max-width: 767px) {
+            .sec-gallery .title-wrap {
+                margin-bottom: 32px; 
+            }
+            .rolling-wrapper {
+                display: block; 
+                padding: 0 20px; 
+                overflow: visible;
+            }
+            .rolling-track {
+                display: block; 
+                animation: none; 
+                width: 100%;
+            }
+            .rolling-track:nth-child(2) {
+                display: none; 
+            }
+            .rolling-item {
+                display: block; 
+                width: 100%; 
+                height: auto;
+                aspect-ratio: 3 / 2;
+                margin-right: 0;
+                margin-bottom: 24px; 
+                border-radius: 12px; 
+                flex-shrink: unset; 
+            }
+            .rolling-item:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Section 10: Process */
+        .sec-process { background-color: var(--bg-white); text-align: center; }
+        .process-list { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 56px auto 0; max-width: 900px; text-align: left; }
+        @media (min-width: 768px) { .process-list { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+        .process-item { background: var(--bg-light-1); padding: 32px 24px; border-radius: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+        .process-num { font-size: 32px; font-weight: 800; color: var(--primary-blue); margin-bottom: 16px; opacity: 0.8; }
+        .process-text { font-size: 18px; font-weight: 700; line-height: 1.4; }
+
+        @media (max-width: 767px) {
+            .process-list { margin-top: 32px; }
+            .process-item { padding: 24px; }
+            .process-text { font-size: 16px; }
+        }
+
+        /* Section 11: FAQ */
+        .sec-faq { background-color: var(--bg-light-1); text-align: center; }
+        .sec-faq .container { max-width: 800px; }
+        .faq-item { border-bottom: 1px solid var(--border-color); padding: 24px 0; text-align: left; }
+        .faq-item details { cursor: pointer; }
+        .faq-item summary { font-size: 20px; font-weight: 700; list-style: none; position: relative; padding-right: 32px; color: var(--text-main); }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: '+'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: var(--primary-blue); font-size: 28px; font-weight: 300; }
+        .faq-item details[open] summary::after { content: '−'; }
+        .faq-item .answer { margin-top: 20px; color: var(--text-sub); font-size: 16px; line-height: 1.7; background: var(--bg-white); padding: 24px; border-radius: 12px; }
+
+        @media (max-width: 767px) {
+            .faq-item summary { font-size: 18px; }
+            .faq-item .answer { font-size: 15px; padding: 20px; }
+        }
+
+        /* Section 12: CTA */
+        .sec-cta { background-color: var(--deep-blue-1); color: var(--bg-white); text-align: center; padding: 120px 0; }
+        .sec-cta h2 { color: var(--bg-white); margin-bottom: 24px; }
+        .sec-cta .sub-title { color: #A0B0C4; margin-bottom: 48px; }
+        .sec-cta .btn { background-color: var(--primary-blue); color: var(--bg-white); border: none; }
+        .sec-cta .btn:hover { background-color: var(--accent-blue); }
+
+        @media (max-width: 767px) {
+            .sec-cta { padding: 80px 20px; }
+            .sec-cta .btn { width: 100%; }
+        }
+
+        /* Modal Component */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 16px; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-container { width: 100%; max-width: 1000px; max-height: 90vh; position: relative; display: flex; flex-direction: column; background: var(--bg-white); border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .modal-close { position: absolute; top: -12px; right: -12px; background: #2E3340; border: none; color: white; font-size: 24px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: background 0.2s; }
+        .modal-close:hover { background: #141420; }
+        @media (min-width: 768px) { .modal-close { top: -16px; right: -16px; width: 44px; height: 44px; } }
+        .modal-body { display: flex; flex-direction: column; border-radius: 16px 16px 0 0; overflow-y: auto; flex: 1; }
+        @media (min-width: 768px) { .modal-body { flex-direction: row; } }
+        .modal-col { flex: 1; padding: 32px 24px; }
+        @media (min-width: 768px) { .modal-col { padding: 48px 40px; } }
+        .modal-col.method-1 { background: var(--bg-white); }
+        .modal-col.method-2 { background: var(--bg-light-1); border-top: 1px solid var(--border-color); }
+        @media (min-width: 768px) { .modal-col.method-2 { border-top: none; border-left: 1px solid var(--border-color); } }
+        .method-title { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        @media (min-width: 768px) { .method-title { margin-bottom: 32px; } }
+        .method-title h3 { font-size: 22px; font-weight: 800; margin: 0; color: var(--text-main); }
+        @media (min-width: 768px) { .method-title h3 { font-size: 24px; } }
+        .method-badge { padding: 6px 14px; font-size: 13px; font-weight: 700; border-radius: 4px; letter-spacing: 0.05em; }
+        .method-1 .method-badge { background: var(--primary-blue); color: var(--bg-white); }
+        .method-2 .method-badge { background: var(--accent-blue); color: var(--bg-white); }
+        .step-list { list-style: none; }
+        .step-item { display: flex; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
+        .step-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .step-num { font-size: 18px; font-weight: 800; }
+        .method-1 .step-num { color: var(--primary-blue); }
+        .method-2 .step-num { color: var(--accent-blue); }
+        .step-text { font-size: 15px; line-height: 1.6; color: var(--text-main); }
+        @media (min-width: 768px) { .step-text { font-size: 16px; } }
+        .step-text strong { font-weight: 700; }
+        .step-link { display: inline-flex; align-items: center; font-size: 15px; font-weight: 700; margin-top: 12px; text-decoration: none; border-bottom: 1px solid; padding-bottom: 2px; }
+        .method-1 .step-link { color: var(--primary-blue); border-color: var(--primary-blue); }
+        .method-2 .step-link { color: var(--accent-blue); border-color: var(--accent-blue); }
+        .modal-footer { background: #F8F9FA; padding: 16px 24px; font-size: 13px; color: var(--text-caption); text-align: left; border-radius: 0 0 16px 16px; border-top: 1px solid var(--border-color); flex-shrink: 0; }
+        @media (min-width: 768px) { .modal-footer { padding: 24px 40px; font-size: 14px; } }
+    </style>
+</head>
+<body>
+
+    <!-- 섹션 1 -->
+    <section class="sec-hero">
+        <div class="container hero-inner">
+            <div class="hero-content">
+                <span class="badge">교육비 최대 95% 지원!</span>
+                <h1>중소기업 인재키움 프리미엄 훈련으로<br>조직 역량 극대화</h1>
+                <p class="sub-title">전 직군부터 개발자 교육까지<br>우리 조직에 적합한 AI 교육을 성과로 연결하세요.</p>
+                <a href="https://business.programmers.co.kr/contact-us" class="btn">도입 상담하기</a>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="ai-graphic-container">
+                    <div class="orbit orbit-1"></div>
+                    <div class="orbit orbit-2"></div>
+                    
+                    <div class="ai-tool chatgpt">ChatGPT</div>
+                    <div class="ai-tool claude">Claude</div>
+                    <div class="ai-tool gemini">Gemini</div>
+                    <div class="ai-tool copilot">Copilot</div>
+                    
+                    <div class="ai-core">AI</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 2: Info -->
+    <section class="sec-info">
+        <div class="container">
+            <h2>우리 회사 AI 교육비,<br>최대 95%까지 지원받고 계신가요?</h2>
+            <p class="sub-title">중소기업 맞춤형 현장 오프라인 교육으로 실무 역량을 높이세요</p>
+            <div class="info-card">
+                <ul class="info-list">
+                    <li>교육비 최대 95% 지원 (승인 과정 수료 시)
+                        <span>* 수도권 90%, 수도권 외 95%</span>
+                    </li>
+                    <li>지원 대상: 우선지원대상(중소기업) 소속 재직근로자
+                        <span>* 기업의 수강 인원·대상 기업 여부에 따라 달라질 수 있습니다.</span>
+                    </li>
+                    <li>교육 형식: 오프라인 (서울 서초구 소재 강의장)</li>
+                </ul>
+                <p class="caption">* 세부 지원 요건 및 지원 한도는 기업별 조건에 따라 달라질 수 있습니다.</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <button id="btnOpenModal" class="btn btn-outline">우리 회사 지원 조건 조회하러가기</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 3: Graph -->
+    <section class="sec-graph">
+        <div class="container">
+            <h2>수많은 기업과 기관이 검증한<br>프로그래머스 기업교육</h2>
+            <p class="sub-title">AI 기초부터 비개발자 AX 역량 강화까지, 기업의 지속 가능한 성장을 견인합니다.</p>
+            
+            <div class="graph-wrapper">
+                <div class="graph-head">
+                    <div class="graph-head-left">
+                        <p>프로그래머스 교육 서비스 이용 누적 고객수</p>
+                        <strong>700,000+</strong>
+                    </div>
+                    <div class="graph-head-right">
+                        단위: 명
+                    </div>
+                </div>
+
+                <div class="graph-chart">
+                    <div class="graph-grid">
+                        <div class="graph-grid-line"></div>
+                        <div class="graph-grid-line"></div>
+                        <div class="graph-grid-line"></div>
+                        <div class="graph-grid-line"></div>
+                        <div class="graph-grid-line"></div>
+                    </div>
+                    
+                    <svg class="graph-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                        <path d="M 100 702 L 300 567 L 500 418 L 700 203 L 900 62" stroke="#0078FF" stroke-width="4.5" vector-effect="non-scaling-stroke" fill="none" stroke-linejoin="round" />
+                    </svg>
+                    
+                    <div class="graph-cols">
+                        <div class="graph-col">
+                            <div class="graph-bar" style="height: 29.8%;"></div>
+                            <div class="graph-dot" style="bottom: 29.8%;"></div>
+                            <div class="graph-value" style="bottom: 29.8%;">223,696</div>
+                        </div>
+                        <div class="graph-col">
+                            <div class="graph-bar" style="height: 43.3%;"></div>
+                            <div class="graph-dot" style="bottom: 43.3%;"></div>
+                            <div class="graph-value" style="bottom: 43.3%;">324,459</div>
+                        </div>
+                        <div class="graph-col">
+                            <div class="graph-bar" style="height: 58.2%;"></div>
+                            <div class="graph-dot" style="bottom: 58.2%;"></div>
+                            <div class="graph-value" style="bottom: 58.2%;">436,829</div>
+                        </div>
+                        <div class="graph-col">
+                            <div class="graph-bar" style="height: 79.7%;"></div>
+                            <div class="graph-dot" style="bottom: 79.7%;"></div>
+                            <div class="graph-value" style="bottom: 79.7%;">597,881</div>
+                        </div>
+                        <div class="graph-col">
+                            <div class="graph-bar" style="height: 93.8%;"></div>
+                            <div class="graph-dot" style="bottom: 93.8%;"></div>
+                            <div class="graph-value" style="bottom: 93.8%;">703,449</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="graph-labels">
+                    <div class="graph-label">2021년</div>
+                    <div class="graph-label">2022년</div>
+                    <div class="graph-label">2023년</div>
+                    <div class="graph-label">2024년</div>
+                    <div class="graph-label">2025년</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 4: Compare -->
+    <section class="sec-compare">
+        <div class="container">
+            <div class="title-wrap">
+                <h2>교육 도입 전후,<br>달라진 조직의 생산성을 직접 확인하세요</h2>
+                <p class="sub-title">실무 맞춤형 AI 교육으로 반복 업무는 줄어들고, 업무 속도는 빨라집니다.</p>
+            </div>
+            
+            <div class="compare-wrap">
+                <div class="comp-card comp-before">
+                    <div class="comp-header">BEFORE · 교육 전</div>
+                    <div class="comp-title">사람이 반복해서 처리</div>
+                    <ul class="comp-list">
+                        <li class="comp-item"><h4>보고서 초안 작성</h4><p>매번 처음부터 작성</p></li>
+                        <li class="comp-item"><h4>데이터 취합·정리</h4><p>여러 파일을 수작업 결합</p></li>
+                        <li class="comp-item"><h4>정기 업무 보고</h4><p>같은 형식으로 반복 제작</p></li>
+                    </ul>
+                    <p class="comp-caption">반복 업무에 시간이 묶이고 핵심 판단은 늦어집니다.</p>
+                </div>
+                
+                <div class="comp-card comp-after">
+                    <div class="comp-arrow">→</div>
+                    <div class="comp-header">AFTER · 교육 후</div>
+                    <div class="comp-title">AI와 함께 더 빠르게 완성</div>
+                    <ul class="comp-list">
+                        <li class="comp-item"><h4>업무 문서·콘텐츠</h4><p>구조화된 프롬프트로 초안 생성</p></li>
+                        <li class="comp-item"><h4>데이터 분석·리포트</h4><p>정리부터 시각화까지 자동화</p></li>
+                        <li class="comp-item"><h4>MVP·AI 서비스</h4><p>아이디어를 작동하는 결과물로</p></li>
+                    </ul>
+                    <p class="comp-caption">배운 내용을 자신의 업무 흐름과 실제 산출물로 연결합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 5: 커리큘럼 탭 -->
+    <section class="sec-curriculum">
+        <div class="container">
+            <h2>직무는 다 다른데, 왜 AI 교육은 똑같아야 할까요?</h2>
+            <p class="sub-title">AI 입문, 업무 활용, 조직 AX, 서비스 구현까지<br>맞춤 훈련을 제안합니다.</p>
+            <div class="tabs-container">
+                <input type="radio" name="tabs" id="tab1" class="tabs-inputs" checked>
+                <input type="radio" name="tabs" id="tab2" class="tabs-inputs">
+                <input type="radio" name="tabs" id="tab3" class="tabs-inputs">
+                <input type="radio" name="tabs" id="tab4" class="tabs-inputs">
+                <div class="tabs-labels">
+                    <label for="tab1" class="tab-label"><small>TRACK 01</small>AI 입문</label>
+                    <div class="tab-arrow"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+                    <label for="tab2" class="tab-label"><small>TRACK 02</small>업무 활용</label>
+                    <div class="tab-arrow"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+                    <label for="tab3" class="tab-label"><small>TRACK 03</small>조직 AX</label>
+                    <div class="tab-arrow"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></div>
+                    <label for="tab4" class="tab-label"><small>TRACK 04</small>서비스 구현</label>
+                </div>
+                
+                <div class="tab-content" id="content1">
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="26" width="40" height="24" rx="3" fill="#ECF4FF" stroke="#0078FF" stroke-width="3"/><path d="M8 50h48v4H8z" fill="#0078FF"/><path d="M42 26V14a2 2 0 0 0-2-2H24a2 2 0 0 0-2 2v12" stroke="#0078FF" stroke-width="3"/><circle cx="48" cy="16" r="10" fill="#CFFF3B" stroke="#0078FF" stroke-width="3"/><path d="M44 16h8M48 12v8" stroke="#0078FF" stroke-width="3" stroke-linecap="round"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[주니어·전 직군] 신입·주니어를 위한 AI 업무 기초 활용 (7H / 1일)</h4>
+                            <p><strong>학습 내용:</strong> AI 도구 비교 · 프롬프트 · 업무 문서 작성 · 엑셀/시트 보조 · 윤리/보안</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="22" fill="#ECF4FF" stroke="#0078FF" stroke-width="3"/><circle cx="32" cy="32" r="10" stroke="#0078FF" stroke-width="3" stroke-dasharray="4 4"/><circle cx="32" cy="32" r="3" fill="#0078FF"/><path d="M32 10L44 20L38 32" stroke="#CFFF3B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="44" cy="20" r="4" fill="#0078FF"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[전 직군] 전 직원 AI 역량진단·학습 과정 (4H / 1일)</h4>
+                            <p><strong>학습 내용:</strong> AI 역량진단 · 기초 이해 · 취약영역 집중 실습 · 보안/윤리 · 개인 학습 로드맵</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 10L14 18v14c0 12 8 20 18 24 10-4 18-12 18-24V18L32 10z" fill="#ECF4FF" stroke="#0078FF" stroke-width="3"/><rect x="26" y="28" width="12" height="12" rx="2" fill="#CFFF3B" stroke="#0078FF" stroke-width="3"/><path d="M28 28v-4a4 4 0 0 1 8 0v4" stroke="#0078FF" stroke-width="3" stroke-linecap="round"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[전 직군] AI 리터러시와 보안·거버넌스 기초 (8H / 1일)</h4>
+                            <p><strong>학습 내용:</strong> 업무 활용 기초 · 정보 보안 · 개인정보/저작권 · AI 거버넌스 설계</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="content2">
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 24l12-8h28v32H12V24z" fill="#ECF4FF" stroke="#0078FF" stroke-width="3" stroke-linejoin="round"/><path d="M12 24h40" stroke="#0078FF" stroke-width="3"/><path d="M40 10l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" fill="#CFFF3B" stroke="#0078FF" stroke-width="2" stroke-linejoin="round"/><path d="M22 34h16M22 42h10" stroke="#0078FF" stroke-width="3" stroke-linecap="round"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[마케팅·영업·HR] AI 콘텐츠 제작과 비즈니스 문서 자동화 (14H / 2일)</h4>
+                            <p><strong>학습 내용:</strong> 프롬프트 고급 기법 · 카피/비주얼 제작 · 직무별 문서 작성 · 템플릿 자동화 · 품질 검증</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="38" width="10" height="16" fill="#0078FF"/><rect x="28" y="24" width="10" height="30" fill="#CFFF3B"/><rect x="44" y="10" width="10" height="44" fill="#0078FF"/><path d="M8 54h48" stroke="#0078FF" stroke-width="3" stroke-linecap="round"/><path d="M10 24l6-6-6-6" stroke="#0078FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[전 직군] AI 데이터 분석과 업무 자동화(Python 활용) (21H / 3일)</h4>
+                            <p><strong>학습 내용:</strong> 데이터 리터러시/KPI · 엑셀+AI 분석 · 대시보드 · Python 기초/분석 · 자동화 프로젝트</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="content3">
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 16l-8 28h16l-8-28z" fill="#ECF4FF" stroke="#0078FF" stroke-width="3" stroke-linejoin="round"/><path d="M22 44h20v6H22zM20 50h24v4H20z" fill="#0078FF"/><circle cx="32" cy="12" r="4" fill="#CFFF3B" stroke="#0078FF" stroke-width="3"/><path d="M46 22l6-6m0 0v6m0-6h-6" stroke="#0078FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[팀장·파트장·관리자] 팀장·관리자를 위한 AI 리더십과 업무혁신 (7H / 1일)</h4>
+                            <p><strong>학습 내용:</strong> AI 시대 리더 역할 · 관리자 업무 AI 적용 · 팀 프로세스 전환 설계 · 리스크 관리</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="content4">
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="14" width="44" height="36" rx="4" fill="#ECF4FF" stroke="#0078FF" stroke-width="3"/><path d="M10 24h44M16 19h2M22 19h2" stroke="#0078FF" stroke-width="3" stroke-linecap="round"/><rect x="16" y="30" width="14" height="14" fill="#CFFF3B" stroke="#0078FF" stroke-width="3" stroke-linejoin="round"/><path d="M46 42l-4 10 2-4 4 2-2-8z" fill="#0078FF"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[비개발 실무자·PM·기획자] 바이브코딩으로 만드는 AI 웹 서비스(MVP 구현) (21H / 3일)</h4>
+                            <p><strong>학습 내용:</strong> 바이브 코딩 · 웹서비스 구조 · 웹앱 생성/개선 · DB/API 연동 · 배포 · 팀별 MVP 프로젝트</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 20L48 28L32 36L16 28Z" fill="#ECF4FF" stroke="#0078FF" stroke-width="3" stroke-linejoin="round"/><path d="M32 36v16L16 44M32 52l16-8V28" stroke="#0078FF" stroke-width="3" stroke-linejoin="round"/><circle cx="32" cy="20" r="4" fill="#CFFF3B" stroke="#0078FF" stroke-width="3"/><circle cx="16" cy="28" r="4" fill="#0078FF"/><circle cx="48" cy="28" r="4" fill="#0078FF"/><circle cx="32" cy="52" r="4" fill="#0078FF"/></svg>
+                        </div>
+                        <div class="course-info">
+                            <h4>[개발자·IT 담당자] 개발자·IT 담당자를 위한 AI 서비스 설계와 구현 (21H / 3일)</h4>
+                            <p><strong>학습 내용:</strong> LLM API · 구조화 · Codex/Claude Code · RAG · AI Agent · Mini PoC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ★ Section 5.5: 현장 교육 갤러리 ★ -->
+    <section class="sec-gallery">
+        <div class="container">
+            <div class="title-wrap">
+                <h2>이미 수많은 조직이 프로그래머스 AI 맞춤 교육으로 성장하고 있습니다.</h2>
+                <p class="sub-title">여러 실무 현장에서 진행된 교육 사례를 확인해 보세요.</p>
+            </div>
+        </div>
+        
+        <div class="rolling-wrapper">
+            <!-- 첫 번째 트랙 (picture 태그로 브라우저 차원 자동 스위칭) -->
+            <div class="rolling-track">
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9983/premium_edu_photo01_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9973/premium_edu_photo01_pc.jpg" alt="교육 현장 1">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9984/premium_edu_photo02_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9974/premium_edu_photo02_pc.jpg" alt="교육 현장 2">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9985/premium_edu_photo03_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9975/premium_edu_photo03_pc.jpg" alt="교육 현장 3">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9986/premium_edu_photo04_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9976/premium_edu_photo04_pc.jpg" alt="교육 현장 4">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9987/premium_edu_photo05_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9977/premium_edu_photo05_pc.jpg" alt="교육 현장 5">
+                    </picture>
+                </div>
+            </div>
+            <!-- 두 번째 트랙 (PC 무한 롤링용) -->
+            <div class="rolling-track">
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9983/premium_edu_photo01_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9973/premium_edu_photo01_pc.jpg" alt="교육 현장 1">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9984/premium_edu_photo02_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9974/premium_edu_photo02_pc.jpg" alt="교육 현장 2">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9985/premium_edu_photo03_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9975/premium_edu_photo03_pc.jpg" alt="교육 현장 3">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9986/premium_edu_photo04_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9976/premium_edu_photo04_pc.jpg" alt="교육 현장 4">
+                    </picture>
+                </div>
+                <div class="rolling-item">
+                    <picture>
+                        <source media="(max-width: 767px)" srcset="https://resources.grepp.co/production/9987/premium_edu_photo05_mobile.jpg">
+                        <img src="https://resources.grepp.co/production/9977/premium_edu_photo05_pc.jpg" alt="교육 현장 5">
+                    </picture>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 10: 프로세스 -->
+    <section class="sec-process">
+        <div class="container">
+            <h2>기업은 신청만 하면 끝, 운영부터 행정까지 100% 케어</h2>
+            <p class="sub-title">상담 진행부터 맞춤 교육 운영, 행정 처리까지 전 과정 프로세스를 지원합니다.</p>
+            <div class="process-list">
+                <div class="process-item"><span class="process-num">01</span><span class="process-text">교육 상담:<br>기업 목표와 대상 확인</span></div>
+                <div class="process-item"><span class="process-num">02</span><span class="process-text">과정 확정:<br>8개 승인 과정 중 선택</span></div>
+                <div class="process-item"><span class="process-num">03</span><span class="process-text">교육 진행:<br>오프라인 운영<br><span style="font-size: 14px; color: var(--text-caption); font-weight: 400; margin-top: 4px; display: block;">(서울시 서초구 소재 강의장)</span></span></div>
+                <div class="process-item"><span class="process-num">04</span><span class="process-text">행정·환급<br>지원</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 11: FAQ -->
+    <section class="sec-faq">
+        <div class="container">
+            <h2 style="text-align: center;">FAQ</h2>
+            <div style="margin-top: 48px;">
+                <div class="faq-item"><details><summary>어떤 기업이 지원 대상인가요?</summary><div class="answer">우선지원대상기업을 중심으로 지원됩니다.<br>실제 적용 가능 여부는 기업 정보와 사업 기준을 확인한 뒤 안내드립니다.</div></details></div>
+                <div class="faq-item"><details><summary>최대 얼마까지 지원받을 수 있나요?</summary><div class="answer">우선지원대상기업 여부 및 과정 조건에 따라 달라질 수 있습니다.<br>상담을 통해 정확한 범위를 안내받을 수 있습니다.</div></details></div>
+                <div class="faq-item"><details><summary>온라인 교육도 가능한가요?</summary><div class="answer">승인된 8개 과정은 오프라인교육으로만 가능합니다. (서울 서초구 소재 강의장)</div></details></div>
+                <div class="faq-item"><details><summary>개발자가 아니어도 들을 수 있나요?</summary><div class="answer">전 직원·신입·사무직·관리자·비개발 실무자를 위한 과정부터 개발자 과정까지 역할별로 구성되어 있습니다.</div></details></div>
+                <div class="faq-item"><details><summary>어떤 과정이 맞는지 모르겠어요</summary><div class="answer">직급, 직무, 현재 AI 활용 수준, 교육 목표를 기준으로 8개 승인 과정 중 적합한 조합을 추천해드립니다.</div></details></div>
+                <div class="faq-item"><details><summary>교육 신청과 환급은 어떻게 진행되나요?</summary><div class="answer">교육 상담부터 과정 확정, 운영, 행정·환급 안내까지 담당자가 함께 진행하는 구조로 안내드립니다.</div></details></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 12: 하단 CTA -->
+    <section class="sec-cta">
+        <div class="container">
+            <h2>어떤 교육부터 시작해야 할지 고민되시나요?</h2>
+            <p class="sub-title">우리 기업 규모와 직무에 맞는 교육 솔루션을 지금 바로 상담받아 보세요</p>
+            <a href="https://business.programmers.co.kr/contact-us" class="btn">도입 상담하기</a>
+        </div>
+    </section>
+
+    <!-- 팝업: 조건조회 팝업 -->
+    <div id="supportModal" class="modal-overlay">
+        <div class="modal-container">
+            <button id="btnCloseModal" class="modal-close">&times;</button>
+            <div class="modal-body">
+                <div class="modal-col method-1">
+                    <div class="method-title">
+                        <span class="method-badge">METHOD 01</span>
+                        <h3>우선지원대상기업 조회</h3>
+                    </div>
+                    <ul class="step-list">
+                        <li class="step-item">
+                            <div class="step-num">01</div>
+                            <div class="step-text">근로복지공단 고용·산재보험 토탈서비스에 접속해 로그인합니다.<br><a href="https://total.comwel.or.kr/" target="_blank" class="step-link">바로가기 ↗</a></div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">02</div>
+                            <div class="step-text">상단 <strong>'정보조회'</strong> 메뉴를 선택합니다.</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">03</div>
+                            <div class="step-text">좌측 메뉴에서 <strong>'보험가입정보조회'</strong>를 확장한 뒤 <strong>'사업장 총괄카드 조회(20101)'</strong>를 선택합니다.</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">04</div>
+                            <div class="step-text">사업장 총괄카드 조회 페이지에서 <strong>사업자등록번호</strong>를 입력해 조회합니다.</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">05</div>
+                            <div class="step-text">하단 <strong>'대규모기업'</strong> 항목값이 <strong>'비해당'</strong>으로 표시된 경우에만 신청할 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-col method-2">
+                    <div class="method-title">
+                        <span class="method-badge">METHOD 02</span>
+                        <h3>잔여 환급지원금 조회</h3>
+                    </div>
+                    <ul class="step-list">
+                        <li class="step-item">
+                            <div class="step-num">01</div>
+                            <div class="step-text">고용24에 접속해 기업회원 또는 사업자 공동인증서로 로그인합니다.<br><a href="https://www.work24.go.kr/cm/main.do" target="_blank" class="step-link">바로가기 ↗</a></div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">02</div>
+                            <div class="step-text"><strong>마이페이지 → 재직자훈련관리 → 사업주훈련 → 지원한도 조회</strong> 순서로 이동합니다.</div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">03</div>
+                            <div class="step-text">자사 지급가능액의 한도까지 환급금을 수령할 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">안내된 조회 결과와 실제 지원 가능 여부는 기업 정보 및 사업 기준에 따라 달라질 수 있습니다.</div>
+        </div>
+    </div>
+
+    <!-- Modal 제어 스크립트 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const supportModal = document.getElementById('supportModal');
+            const btnOpenSupport = document.getElementById('btnOpenModal');
+            const btnCloseSupport = document.getElementById('btnCloseModal');
+
+            function openModal(modalElement) {
+                modalElement.classList.add('active');
+                document.body.style.overflow = 'hidden'; 
+            }
+            function closeModal(modalElement) {
+                modalElement.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            btnOpenSupport.addEventListener('click', function(e) { e.preventDefault(); openModal(supportModal); });
+            btnCloseSupport.addEventListener('click', function() { closeModal(supportModal); });
+            supportModal.addEventListener('click', function(e) { if (e.target === supportModal) closeModal(supportModal); });
+        });
+    </script>
+</body>
+</html>
